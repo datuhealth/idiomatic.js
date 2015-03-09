@@ -66,7 +66,7 @@ The following should be considered 1) incomplete, and 2) *REQUIRED READING*. I d
 
  * [Baseline For Front End Developers](http://rmurphey.com/blog/2012/04/12/a-baseline-for-front-end-developers/)
  * [Eloquent JavaScript](http://eloquentjavascript.net/)
- * [JavaScript: The Good Parts] (https://7chan.org/pr/src/OReilly_JavaScript_The_Good_Parts_May_2008.pdf)
+ * [JavaScript: The Good Parts](https://7chan.org/pr/src/OReilly_JavaScript_The_Good_Parts_May_2008.pdf)
  * [JavaScript, JavaScript](http://javascriptweblog.wordpress.com/)
  * [Adventures in JavaScript Development](http://rmurphey.com/)
  * [Perfection Kills](http://perfectionkills.com/)
@@ -103,7 +103,6 @@ Projects _must_ include some form of unit, reference, implementation or function
  * [Native & Host Objects](#native)
  * [Comments](#comments)
  * [One Language Code](#language)
- * <a href="#Backbone">Backbone.js</a>
 
 
 
@@ -1265,132 +1264,145 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     Programs should be written in one language, whatever that language may be, as dictated by the maintainer or maintainers.
     
-<h2 id="Backbone">Backbone.js</h2>
-<p>At Datu Health, we currently use the <a rel="nofollow" class="external text" href="http://backbonejs.org/" target="_blank">Backbone.js</a> framework to structure our front end code. It's a pretty flexible solution and provides tools to build single page applications. The previous link takes you to the source, but you may also want to reference the <a rel="nofollow" class="external text" href="http://backbonejs.org/docs/backbone.html" target="_blank">annotated source</a> as it provides a little more context and insight into how each method works. Backbone includes <a href="http://underscorejs.org/" target="_blank">Underscore.js</a> so become familiar with it.</p></p>
-<p>A lot of this info is taken from the Backbone site, but it has been filtered a bit in the attempt to lay things out in a little more novice friendly way.</p>
 
-<h3>Backbone high level concept</h3>
-<p>In Backbone we have <a href="#Backbone_Routers">Backbone Routers</a> which parse your routes (url) and sends you to the appropriate <a href="#Backbone_Views">Backbone View</a>. In the <a href="#Backbone_Views">Backbone View</a>, you have the bulk of the code that displays and manipulates the html/css. If you have data, a singular object would be stored in a <a href="#Backbone_Models">Backbone Model</a> whereas a collection of similar items would be stored in a <a href="#Backbone_Collections">Backbone Collection</a> -- in other words, if you only have a single person object (that holds their info), that would generally be stored in a model -- but if you had, say, an address book, you would have several people objects. You can then take that data and use it in the view to pass along to a template to get rendered.
+## Backbone.js
+At Datu Health, we currently use the [Backbone.js](http://backbonejs.org/) framework to structure our front end code. It's a pretty flexible solution and provides tools to build single page applications. The previous link takes you to the source, but you may also want to reference the [annotated source](http://backbonejs.org/docs/backbone.html) as it provides a little more context and insight into how each method works. Backbone includes [Underscore.js](http://underscorejs.org/) so become familiar with it.  A lot of this info is taken from the Backbone site, but it has been filtered a bit in the attempt to lay things out in a little more novice friendly way.
 
-<p>
-Comparing the overall structure of Backbone to a server-side MVC framework like Rails, the pieces line up like so:</p>
-<ul>
-<li>Backbone.Model – Like a Rails model minus the class methods. Wraps a row of data in business logic.</li>
-<li>Backbone.Collection – A group of models on the client-side, with sorting/filtering/aggregation logic.</li>
-<li>Backbone.Router – Rails routes.rb + Rails controller actions. Maps URLs to functions.</li>
-<li>Backbone.View – A logical, re-usable piece of UI. Often, but not always, associated with a model.</li>
-<li>Client-side Templates – Rails .html.erb views, rendering a chunk of HTML.</li>
-</ul>
+### Backbone high level concept
+In Backbone we have **Backbone Routers** which parse your routes (url) and sends you to the appropriate **Backbone View**. In the **Backbone View**, you have the bulk of the code that displays and manipulates the html/css. If you have data, a singular object would be stored in a **Backbone Model** whereas a collection of similar items would be stored in a **Backbone Collection** -- in other words, if you only have a single person object (that holds their info), that would generally be stored in a model -- but if you had, say, an address book, you would have several people objects. You can then take that data and use it in the view to pass along to a template to get rendered.
 
-<h3 id="Backbone_Routers">Backbone Routers</h3>
-<p>This is where you parse the url, which is what essentially pertains to the section after the domain. E.g. https://my-site.com/#stuff-that-backbone-cares-about</p>
-<p>In the router you'll specify a routes object like so:</p>
-<pre> routes: {
+Comparing the overall structure of Backbone to a server-side MVC framework like Rails, the pieces line up like so:
+
+- Backbone.Model – Like a Rails model minus the class methods. Wraps a row of data in business logic.
+- Backbone.Collection – A group of models on the client-side, with sorting/filtering/aggregation logic.
+- Backbone.Router – Rails routes.rb + Rails controller actions. Maps URLs to functions.
+- Backbone.View – A logical, re-usable piece of UI. Often, but not always, associated with a model.
+- Client-side Templates – Rails .html.erb views, rendering a chunk of HTML.
+
+### Backbone Routers
+This is where you parse the url, which is what essentially pertains to the section after the domain, e.g. https://my-site.com/**#stuff-that-backbone-cares-about**. In the router you'll specify a routes object like so:
+
+```
+ routes: {
    'super-cool-route': 'superCoolRouteHandler'
  }
-</pre>
-<p>Where the key is the url portion, e.g. domain/<b>#super-cool-route</b></p>
-<p>And the value is the name of the method that will handle what happens when the user hits that route:</p>
-<pre> ... 
+```
+
+Where the key is the url portion, e.g. domain/**#super-cool-route**, and the value is the name of the method that will handle what happens when the user hits that route:
+
+```
  superCoolRouteHandler: function() {
-   //Do some cool stuff, like call a backbone view and render some content
+   //Do some cool stuff, like call a backbone view and render content
  }
- ...
-</pre>
-<p>Routes can contain parameter parts, e.g. :param, which match a single URL component between slashes. Part of a route can be made optional by surrounding it in parentheses (/:optional).  For example:</p>
-<pre>
+```
+
+Routes can contain parameter parts, e.g. **:param**, which match a single URL component between slashes. Part of a route can be made optional by surrounding it in parentheses **(/:optional_param)**.  For example:
+
+```
 'patients/:patientId/messages(/:subItem)': 'patientMessages',
-</pre>
-<p>During page load, after your application has finished creating all of its routers, be sure to call Backbone.history.start(), or Backbone.history.start({pushState: true}) to route the initial URL, which serves as a global router (per frame) to handle hashchange events or pushState, match the appropriate route, and trigger callbacks. You shouldn't ever have to create one of these yourself since Backbone.history already contains one.</p>
+```
 
-<h3 id="Backbone_Views">Backbone Views</h3>
-<p>You should have all of the code pertaining to the look and feel of the page in a view. That is, once you have your data ready in your collection or model (more on that below) you then take that data and use the view to render it -- in our case, we use a template that we pass along the data to in order to render it.</p>
-<p>However, the view also holds logic, where applicable/necessary, to manipulate the dom -- e.g. binding events, adding/removing classes, etc.</p>
+During page load, after your application has finished creating all of its routers, be sure to call **Backbone.history.start()**, or Backbone.history.start({pushState: true}) to route the initial URL, which serves as a global router to handle hashchange events or pushState, match the appropriate route, and trigger callbacks. You shouldn't ever have to create one of these yourself since Backbone.history already contains one.
 
-<h5>Key Properties/Methods</h5>
-<p><b>el</b>: this is one of two things and it's good to know the difference.</p>
-<ul>
-<li>A CSS style selector of the dom node you want the content of your view to be added to. E.g.</li>
-</ul>
-<pre>   el: 'div.my-awesome-div'
-</pre>
-<ul>
-<li>If left undefined, el becomes an empty &lt;div&gt;</li>
-</ul>
-<p><br>
-<b>$el</b>: this is a cached jquery object of the aforementioned el. You can reference it in the view via calling: this.$el</p>
-<p><br>
-<b>events</b>: this is an object that you can define in the view, and backbone will automatically bind the events for you. You must be aware though, that the events must follow a certain syntax and that they are bound to the view's "el" -- meaning you cannot bind events that are not descendants of "el" with this object.</p>
-<ul>
-<li>Syntax is as follows: the <b>key</b> of the item must have the event type first (e.g. click, keyup, etc), followed by a space, and then followed by a CSS style selector. The <b>value</b> of the item must be the name of a method you've created to handle the event</li>
-</ul>
-<pre>   events: {
+### Backbone Views
+You should have all of the code pertaining to the look and feel of the page in a view. That is, once you have your data ready in your collection or model (more on that below) you then take that data and use the view to render it -- in our case, we use a template that we pass along the data to in order to render it. However, the view also holds logic, where applicable/necessary, to manipulate the dom -- e.g. binding events, adding/removing classes, etc.
+
+##### Key Properties/Methods
+**el**: this is one of two things and it's good to know the difference.
+
+- A CSS style selector of the dom node you want the content of your view to be added to.
+
+  ```   
+    el: 'div.my-awesome-div' 
+  ```
+
+- If left undefined, el becomes an empty &lt;div&gt;
+
+**$el**: this is a cached jquery object of the aforementioned el. You can reference it in the view via calling: this.$el
+
+**events**: this is an object that you can define in the view, and backbone will automatically bind the events for you. You must be aware though, that the events must follow a certain syntax and that they are bound to the view's "el" -- meaning you cannot bind events that are not descendants of "el" with this object.
+
+- Syntax is as follows: the **key** of the item must have the event type first (e.g. click, keyup, etc), followed by a space, and then followed by a CSS style selector. The **value** of the item must be the name of a method you've created to handle the event.
+  
+``` 
+   events: {
        'click li.my-awesome-menu-item': 'myAwesomeMenuHandler'
    }
-   ...
+
    myAwesomeMenuHandler: function(event) {
        //handle the click event appropriately
    }
-</pre>
-<p><br>
-<b>initialize</b>: this is a method that gets called as the view is created. If you want/need to, you can define it so that you can do various actions like pass along information from outside the view, setup a collection/model, setup listeners, and more. For example:</p>
-<pre>   initialize: function (options) {
-       //we can pass along data/info 
-       options = options || {};
-       this.awesomeData = options.awesomeData || [];
-       
-       //we can setup a collection
-       this.collection = new AwesomeCollection();
-       
-       //we can setup listeners (more on this later)
-       this.listenTo(this.collection, 'someCustomActionCalledByTheCollection', this.awesomeActionHandlerMethod)
-   }
-</pre>
-<p><b>render</b>: this is the heart of the view essentially. You define this method as how the view will render its content -- you setup the template and pass it any data it needs to render. E.g.</p>
-<pre>   render: function() {
-       var template = MyAwesomeTemplate;
-       
-       this.$el.html(template({
-           myAwesomeData1: 'some data'
-           myAwesomeData2: 'some more data'
-       }));
-   }
-</pre>
+```
 
-<h3 id="Backbone_Models">Backbone Models</h3>
-<p>A model is, very generally, a single object in terms of data. For example, if you have a table that is populated with several rows, and each row has a friend alongside a little of their information, that row's data would be housed in a model.</p>
-<p>Backbone models provide a robust set of properties and methods, but in the interest of brevity, we'll look at a few key ones.</p>
+**initialize**: this is a method that gets called as the view is created. If you want/need to, you can define it so that you can do various actions like pass along information from outside the view, setup a collection/model, setup listeners, and more. 
 
-<h5>Key Properties/Methods</h5>
-<p><b>url</b>: this is a vital property to set if you are going to use the model to make an async call. It's what the Backbone.sync method (essentially a jquery ajax call with added features) points at to make the call. Pretty self explanatory, but worth mentioning nonetheless.</p>
-<p><br>
-<b>initialize</b>: much like the initialize method mentioned above in the Backbone views section, this method will run after the model has been created. You can pass along data, bind listeners, etc.</p>
-<p><br>
-<b>attributes</b>: an object that holds the model's data. More generally, it's where data gets set when using backbone conventions. It's not recommended to change these directly -- backbone provides accessor methods.</p>
-<p><br>
-<b>get</b>: the method to get a property from the attributes object. Syntax is generally: myModel.get('myProperty')</p>
-<p><br>
-<b>set</b>: the setter method has two implementations.</p>
-<ul>
-<li>You can pass it a single value: myModel.set('key', 'value');</li>
-<li>Or you can pass it an object: myModel.set({ key1: 'value1', key2: 'value2'});</li>
-</ul>
-<p><br>
-<b>fetch</b>: generally, this is the method used to get data from the server. The default implementation allows you to easily mirror the server side data on the clientside, but this is generally more used in true RESTful situations. **This will not clear out your model, but rather extends the attributes of your model**. Side note: we at Datu sometimes repurpose the fetch method to be a semantic way of getting data.</p>
-<p><br>
-<b>parse</b>: a method that can be defined so as to parse the raw AJAX response. For example, if you have a date coming back in the response, by setting a parse method, you can handle the date parsing for that model, and any other model of the same type with one defined method that is called from parse.</p>
-<p><br>
-<b>Backbone.sync</b>: While not truly attached to a backbone model specifically, it is the primary method of making asynchronous calls. It takes three parameters: 1) a string that represents a HTTP verb. In our code, you'll see 'read' (GET), and 'create' (POST). 2) the model or collection to be read/saved. 3) options. These can be the callback methods as well as any other jquery request options.</p>
+```
+initialize: function (options) {
+    //we can pass along data/info 
+    options = options || {};
+    this.awesomeData = options.awesomeData || [];
+       
+    //we can setup a collection
+    this.collection = new AwesomeCollection();
+       
+    //we can setup listeners (more on this later)
+    this.listenTo(this.collection, 'someCustomActionCalledByTheCollection', this.awesomeActionHandlerMethod);
+}
+```
 
-<h5>Default Model Values</h5>
-<p>Backbone includes "defaults", however, the problem with it is that it only goes one level deep, so if you have nested objects being returned, there are places that will try to dereference something null and it'll blow up. At Datu we have created a custom function named setDefaults(), which is on the model prototype, so it is available to any model.  It should be called from within the parse function of the model like so:</p>
-<pre>
+**render**: this is the heart of the view essentially. You define this method as how the view will render its content -- you setup the template and pass it any data it needs to render.
+
+```
+    render: function() {
+        var template = MyAwesomeTemplate;
+       
+        this.$el.html(template({
+            myAwesomeData1: 'some data',
+            myAwesomeData2: 'some more data'
+        }));
+    }
+```
+
+### Backbone Models
+A model is, very generally, a single object in terms of data. For example, if you have a table that is populated with several rows, and each row has a friend alongside a little of their information, that row's data would be housed in a model. Backbone models provide a robust set of properties and methods, but in the interest of brevity, we'll look at a few key ones.
+
+##### Key Properties/Methods
+**url**: this is a vital property to set if you are going to use the model to make an asynchronous call. It's what the Backbone.sync method (essentially a jquery ajax call with added features) points at to make the call. 
+
+**initialize**: much like the initialize method mentioned above in the Backbone views section, this method will run after the model has been created. You can pass along data, bind listeners, etc.
+
+**attributes**: an object that holds the model's data. More generally, it's where data gets set when using backbone conventions. It's not recommended to change these directly -- backbone provides accessor methods.
+
+**get**: the method to get a property from the attributes object. Syntax is generally: myModel.get('myProperty')
+
+**set**: the setter method has two implementations.
+
+- You can pass it a single value: myModel.set('key', 'value');
+- Or you can pass it an object: myModel.set({ key1: 'value1', key2: 'value2'});
+
+**fetch**: generally, this is the method used to get data from the server. The default implementation allows you to easily mirror the server side data on the clientside, but this is generally more used in true RESTful situations. **This will not clear out your model, but rather extends the attributes of your model**. Side note: we at Datu sometimes repurpose the fetch method to be a semantic way of getting data.
+
+**parse**: a method that can be defined so as to parse the raw AJAX response. For example, if you have a date coming back in the response, by setting a parse method, you can handle the date parsing for that model, and any other model of the same type with one defined method that is called from parse.
+
+**Backbone.sync**: While not truly attached to a backbone model specifically, it is the primary method of making asynchronous calls. It takes three parameters: 
+
+1. a string that represents a HTTP verb. In our code, you'll see 'read' (GET), and 'create' (POST). 
+2. the model or collection to be read/saved. 
+3. options. These can be the callback methods as well as any other jquery request options.
+
+##### Default Model Values
+Backbone includes "defaults", however, the problem with it is that it only goes one level deep, so if you have nested objects being returned, there are places that will try to dereference something null and it'll blow up. At Datu we have created a custom function named setDefaults(), which is on the model prototype, so it is available to any model.  It should be called from within the parse function of the model like so:
+
+```
 parse: function(resp) {
     this.setDefaults(resp);
 }
-</pre>
-<p>The default values should be specified from within the model like so:</p>
-<pre>defaultVals: {
+```
+
+The default values should be specified from within the model like so:
+
+```
+defaultVals: {
             "Name": "--",
             "Categories": [],
             "Date": "--",
@@ -1404,87 +1416,100 @@ parse: function(resp) {
                 }
             ]
         }
-});</pre></p>
+});
+```
 
-<h5>Validation</h5>
-<p>Here at Datu we use a <a href="https://github.com/thedersen/backbone.validation" target="_blank">validation plugin</a> for validating backbone models. Please only use this method for validation<p>
+##### Validation
+Here at Datu we use a [validation plugin](https://github.com/thedersen/backbone.validation) for validating backbone models. Please only use this method for validation
 
-<h3 id="Backbone_Collections">Backbone Collections</h3>
-<p>Much like how a model often represents a row of table data, a collection often represents the entire table itself -- in other words it is an ordered set of models. At a high level, you can think of it like a JSON array of objects: [{model1}, {model2}, {model3}, ... ]</p>
-<p>And also like the model, it has several properties and methods, but we're mainly concerned with a few key ones.</p>
+### Backbone Collections
+Much like how a model often represents a row of table data, a collection often represents the entire table itself -- in other words it is an ordered set of models. At a high level, you can think of it like a JSON array of objects: [{model1}, {model2}, {model3}, ... ]
 
-<h5>Key Properties/Methods</h5>
-<p><b>url</b>: this is a vital property to set if you are going to use the model to make an async call. It's what the Backbone.sync method (essentially a jquery ajax call with added features) points at to make the call. Pretty self explanatory, but worth mentioning nonetheless.</p>
-<p><br>
-<b>model</b>: this is to specify a model class that the collection houses. For example, if my collection is "Cars" the model might be "Car"</p>
-<p><br>
-<b>initialize</b>: much like the initialize method mentioned above, this method will run after the model has been created. You can pass along data, bind listeners, etc.</p>
-<p><br>
-<b>models</b>: the raw array of objects -- often used when passing the entire collection to a template for a table to be rendered.</p>
-<p><br>
-<b>get</b>: the method to get a specific model from the collection. You need to know the id of the model (assigned upon the model's creation).</p>
-<p><br>
-<b>set</b>: the setter method will do a "smart" update on the collection where it will create models if they are new, delete models if they are present in the current list and not present in the list passed to the method, and will change any existing models if necessary. This takes takes a list of models (an array of objects).</p>
-<p><br>
-<b>reset</b>: this will completely reset the collection, discarding any previous models the collection held, and repopulates the list with the models passed to the method. This also takes takes a list of models (an array of objects).</p>
-<p><br>
-<b>fetch</b>: generally, this is the method used to get data from the server. The default implementation allows you to easily mirror the server side data on the clientside, but this is generally more used in true RESTful situations. **This will not clear out your collection, but rather extends the attributes of your collection**. Side note: we at Datu sometimes repurpose the fetch method to be a semantic way of getting data.</p>
-<p><br>
-<b>Backbone.sync</b>: While not truly attached to a backbone collection specifically, it is the primary method of making asynchronous calls. It takes three parameters: 1) a string that represents a HTTP verb. In our code, you'll see 'read' (GET), and 'create' (POST). 2) the model or collection to be read/saved. 3) options. These can be the callback methods as well as any other jquery request options.</p>
+And also like the model, it has several properties and methods, but we're mainly concerned with a few key ones.
 
-<h3 id="Backbone_Events">Backbone Events</h3>
-<p>This has been mentioned above, but Backbone has an events module that can be used to bind and trigger custom events. This is available in any Backbone object (views, models, controllers, routers) and can also be extended on in order to do things like create a global event bus.  View events are automatically bound to the view's context for you. </p>
-<p>These events do not have to be declared when they are bound and they can also take arguments. Example:</p>
-<pre>   //In a view, bind a custom listener to its collection to know when to render content
-   this.listenTo( this.collection, 'renderContent', this.render);
-   ...
-   //In the collection, once a successful AJAX call has been made, and the response has been set in the collection, we can trigger a render
-   this.trigger('renderContent')
-</pre>
+##### Key Properties/Methods
+**url**: this is a vital property to set if you are going to use the model to make an async call. It's what the Backbone.sync method (essentially a jquery ajax call with added features) points at to make the call. 
 
-<h3>Backbone Best Practices</h3>
-<p>In general, a good rule of thumb is to keep your concerns separate. The backbone paradigm and design offers logical places to handle various bits of logic.</p>
-<ul>
-<li>Keep all dom manipulation logic in the view.</li>
-<li>Keep all data manipulation logic in the model or collection. You can easily reuse and extend models and collections throughout your application without concern for the views that are tying into them.</li>
-<li>Keep all the AJAX and corresponding asynchronous logic in the model or collection.</li>
-<li>Keep your templates as simple as possible -- some logic is unavoidable, but most of the data should be nice and neat <i>before</i> it gets to the template</li>
-</ul>
+**model**: this is to specify a model class that the collection houses. For example, if my collection is "Cars" the model might be "Car"
 
-<h5 id="Callbacks_Deferreds">AJAX Calls, Callbacks, Deferreds</h5>
-<p>When making asynchronous calls, there are different ways to handle the data responses coming back. At Datu we strongly prefer developers <b>not</b> use deferreds (represents work that is not yet finished). While deferreds are a powerful tool to handle post-AJAX call duties, implementation can vary wildly (and has). One of the bigger overarching problems with deferreds is that they can be extremely fragile since you have to be very cognizant of more than just happy path handling.</p>
-<p>As an alternative, anyone doing front end dev should use the built in callback methods that are available in Backbone.sync. More specifically these methods are:</p>
-<ul>
-<li>success -- this is called when (and only when) you get a good http response</li>
-<li>error -- this is called when you get any sort of "error" http response (401, 403, 404, 500, etc)</li>
-<li>complete -- this is called when the call response comes back, regardless of http success or error</li>
-</ul>
-<p>With those three callbacks combined with Backbone events, there's really no reasonable need for deferreds outside of a handful of very specific cases. At this point, there are deferreds in the code base -- however, moving forward, anyone that uses a deferred should have a strong case as to why it's better than the system of callbacks, and why the aforementioned system cannot be used. Further, the person reviewing new code should ask the question if they see a deferred in the submitted code.</p>
+**initialize**: much like the initialize method mentioned above, this method will run after the model has been created. You can pass along data, bind listeners, etc.
 
-<h5 id="Memory_Leaks">Avoid Memory Leaks By Unbinding Events</h5>
-<p>Avoid using .on() when binding an event:
-<pre>
+**models**: the raw array of objects -- often used when passing the entire collection to a template for rendering a list.
+
+**get**: the method to get a specific model from the collection. You need to know the id of the model (assigned upon the model's creation).
+
+**set**: the setter method will do a "smart" update on the collection where it will create models if they are new, delete models if they are present in the current list and not present in the list passed to the method, and will change any existing models if necessary. This takes a list of models (an array of objects).
+
+**reset**: this will completely reset the collection, discarding any previous models the collection held, and repopulates the list with the models passed to the method. This also takes takes a list of models (an array of objects).
+
+**fetch**: generally, this is the method used to get data from the server. The default implementation allows you to easily mirror the server side data on the clientside, but this is generally more used in true RESTful situations. **This will not clear out your collection, but rather extends the attributes of your collection**. Side note: we at Datu sometimes repurpose the fetch method to be a semantic way of getting data.
+
+**Backbone.sync**: While not truly attached to a backbone collection specifically, it is the primary method of making asynchronous calls. It takes three parameters: 
+
+1. a string that represents a HTTP verb. In our code, you'll see 'read' (GET), and 'create' (POST). 
+2. the model or collection to be read/saved. 
+3. options. These can be the callback methods as well as any other jquery request options.
+
+### Backbone Events
+This has been mentioned above, but Backbone has an events module that can be used to bind and trigger custom events. This is available in any Backbone object (views, models, controllers, routers) and can also be extended in order to do things like create a global event bus.  View events are automatically bound to the view's context for you.
+
+These events do not have to be declared when they are bound and they can also take arguments.
+
+```
+//In a view, bind a custom listener to its collection to know when to render content
+this.listenTo( this.collection, 'renderContent', this.render);
+
+//In the collection, once a successful AJAX call has been made & the response has been set, we can trigger a render
+this.trigger('renderContent');
+```
+
+### Backbone Best Practices
+In general, a good rule of thumb is to keep your concerns separate. The backbone paradigm and design offers logical places to handle various bits of logic.
+
+- Keep all dom manipulation logic in the view.
+- Keep all data manipulation logic in the model or collection. You can easily reuse and extend models and collections throughout your application without concern for the views that are tying into them.
+- Keep all the AJAX and corresponding asynchronous logic in the model or collection.
+- Keep your templates as simple as possible -- some logic is unavoidable, but most of the data should be nice and neat *before* it gets to the template
+
+##### AJAX Calls, Callbacks, Deferreds
+When making asynchronous calls, there are different ways to handle the data responses coming back. At Datu we strongly prefer developers **not** use deferreds (represents work that is not yet finished). While deferreds are a powerful tool to handle post-AJAX call duties, implementation can vary wildly (and has). One of the bigger overarching problems with deferreds is that they can be extremely fragile since you have to be very cognizant of more than just happy path handling.
+
+As an alternative, anyone doing front end dev should use the built in callback methods that are available in Backbone.sync. More specifically these methods are:
+
+- success -- this is called when (and only when) you get a good http response
+- error -- this is called when you get any sort of "error" http response (401, 403, 404, 500, etc)
+- complete -- this is called when the call response comes back, regardless of http success or error
+
+With those three callbacks combined with Backbone events, there's really no reasonable need for deferreds outside of a handful of very specific cases. At this point, there are deferreds in the code base -- however, moving forward, anyone that uses a deferred should have a strong case as to why it's better than the system of callbacks, and why the aforementioned system cannot be used. Further, the person reviewing new code should ask the question if they see a deferred in the submitted code.
+
+##### Avoid Memory Leaks By Unbinding Events
+Avoid using .on() when binding an event:
+
+```
 initialize: function() {
     this.model.on('change', this.render, this);
 }
-</pre>
-<p>When using .on(), the "change" event handler is still bound even after the view has been removed. Even though your code no longer holds a reference to that view, it is never garbage collected since the model still holds a reference via the event handler. So while the DOM element may be removed, the view object itself is never released from memory. Use the .listenTo() method instead, like this:
-<pre>
+```
+
+When using .on(), the "change" event handler is still bound even after the view has been removed. Even though your code no longer holds a reference to that view, it is never garbage collected since the model still holds a reference via the event handler. So while the DOM element may be removed, the view object itself is never released from memory. Use the .listenTo() method instead, like this:
+
+```
 initialize: function() {
     this.listenTo(this.model, 'change', this.render);
 }
-</pre>
+```
 
-<h5>Binding "this"</h5> 
-<p>
-Perhaps the single most common JavaScript "gotcha" is the fact that when you pass a function as a callback, its value for this is lost. When dealing with events and callbacks in Backbone, you'll often find it useful to rely on listenTo or the optional context argument that many of Underscore and Backbone's methods use to specify the this that will be used when the callback is later invoked.</p>
-<pre>
+##### Binding "this"
+Perhaps the single most common JavaScript "gotcha" is the fact that when you pass a function as a callback, its value for this is lost. When dealing with events and callbacks in Backbone, you'll often find it useful to rely on listenTo or the optional context argument that many of Underscore and Backbone's methods use to specify the this that will be used when the callback is later invoked.
+
+```
 messages.each(this.addMessage, this);
-</pre>  
+```
 
-<h5 id="View_Parts">Render Parts Of Views Instead Of Entire Views</h5>
-<p>This prevents the entire view from re-rendering everytime there is a change to a model or collection. Instead try re-rendering only the part of the view corresponding to the changed attribute in the model or model in the collection. For example, create a template and view that pertains to each model in the collection.</p>
-</div>
+##### Render Parts Of Views Instead Of Entire Views
+This prevents the entire view from re-rendering everytime there is a change to a model or collection. Instead try re-rendering only the part of the view corresponding to the changed attribute in the model or model in the collection. For example, create a template and view that pertains to each model in the collection.
+
+
 
 ## Appendix
 
