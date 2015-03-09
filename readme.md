@@ -136,7 +136,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     A. Parens, Braces, Linebreaks
 
-    ```javascript
+    ```
 
     // if/else/for/while/try always have spaces, braces and span multiple lines
     // this encourages readability
@@ -201,7 +201,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     B. Assignments, Declarations, Functions ( Named, Expression, Constructor )
 
-    ```javascript
+    ```
 
     // 2.B.1.1
     // Variables
@@ -273,7 +273,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     }
     ```
 
-    ```javascript
+    ```
 
     // 2.B.2.1
     // Named Function Declaration
@@ -334,7 +334,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     C. Exceptions, Slight Deviations
 
-    ```javascript
+    ```
 
     // 2.C.1.1
     // Functions with callbacks
@@ -437,7 +437,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     ```
 
 
-    ```javascript
+    ```
 
     // 3.B.1.1
 
@@ -485,7 +485,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     Here are some common cases along with coercions:
 
 
-    ```javascript
+    ```
 
     // 3.B.2.1
 
@@ -522,7 +522,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     ```
 
 
-    ```javascript
+    ```
     // 3.B.2.2
 
     var number = 1,
@@ -551,7 +551,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     // true
     ```
 
-    ```javascript
+    ```
     // 3.B.2.3
     // Never do any of this. It's too complex.
 
@@ -578,7 +578,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     }
     ```
 
-    ```javascript
+    ```
     // 3.B.2.4
     // Never do any of this. It's too complex.
 
@@ -625,7 +625,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
 4. <a name="cond">Conditional Evaluation</a>
 
-    ```javascript
+    ```
 
     // 4.1.1
     // When only evaluating that an array has length,
@@ -700,7 +700,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     ```
     ALWAYS evaluate for the best, most accurate result - the above is a guideline, not a dogma.
 
-    ```javascript
+    ```
 
     // 4.2.1
     // Type coercion and evaluation notes
@@ -735,7 +735,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
 5. <a name="practical">Practical Style</a>
 
-    ```javascript
+    ```
 
     // 5.1.1
     // A Practical Module
@@ -774,7 +774,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     ```
 
-    ```javascript
+    ```
 
     // 5.2.1
     // A Practical Constructor
@@ -820,7 +820,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     The following code is an example of egregious naming:
 
-    ```javascript
+    ```
 
     // 6.A.1.1
     // Example of code with poor names
@@ -837,7 +837,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     Here's the same piece of logic, but with kinder, more thoughtful naming (and a readable structure):
 
-    ```javascript
+    ```
 
     // 6.A.2.1
     // Example of code with improved names
@@ -859,7 +859,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     A few additional naming pointers:
 
-    ```javascript
+    ```
 
     // 6.A.3.1
     // Naming strings
@@ -928,7 +928,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     Beyond the generally well known use cases of `call` and `apply`, always prefer `.bind( this )` or a functional equivalent, for creating `BoundFunction` definitions for later invocation. Only resort to aliasing when no preferable option is available.
 
-    ```javascript
+    ```
 
     // 6.B.1
     function Device( opts ) {
@@ -963,7 +963,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     When unavailable, functional equivalents to `.bind` exist in many modern JavaScript libraries.
 
 
-    ```javascript
+    ```
     // 6.B.2
 
     // eg. lodash/underscore, _.bind()
@@ -1024,7 +1024,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     As a last resort, create an alias to `this` using `self` as an Identifier. This is extremely bug prone and should be avoided whenever possible.
 
-    ```javascript
+    ```
 
     // 6.B.3
 
@@ -1053,7 +1053,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature, which should be used whenever possible
 
-    ```javascript
+    ```
 
     // 6.C.1
 
@@ -1091,7 +1091,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     Notable improvements can be witnessed here as well:
     https://github.com/rwldrn/idiomatic.js/issues/13
 
-    ```javascript
+    ```
 
     // 7.A.1.1
     // An example switch statement
@@ -1194,8 +1194,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
 
     B. Early returns promote code readability with negligible performance difference
 
-    ```javascript
-
+    ```
     // 7.B.1.1
     // Bad:
     function returnLate( foo ) {
@@ -1224,7 +1223,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     
     C. DOM events should always be namspaced
     
-    ```javascript
+    ```
     // 7.C.1.1
     // Bad:
     $( 'body' ).on( 'click', function() {
@@ -1235,6 +1234,7 @@ The following sections outline a _reasonable_ style guide for modern JavaScript 
     $( 'body' ).on( 'click.eventName', function() {
         // do something
     });
+    ```
 
 
 8. <a name="native">Native & Host Objects</a>
